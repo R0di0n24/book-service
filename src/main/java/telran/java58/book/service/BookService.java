@@ -8,7 +8,7 @@ public interface BookService {
 
     BookDto deleteBook(String isbn);
 
-    BookDto updateBookTitle(String isbn,String title);
+    BookDto updateBookTitle(String isbn, String title);
 
     BookDto getBook(String isbn);
 
@@ -16,7 +16,7 @@ public interface BookService {
 
     Iterable<BookDto> findBooksByPublisher(String publisherName);
 
-    Iterable<AuthorDto> findAuthors(String isbn);
+    Iterable<AuthorDto> findBookAuthors(String isbn);
 
     Iterable<String> findPublishersByAuthor(String authorName);
 

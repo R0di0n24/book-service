@@ -11,7 +11,7 @@ import telran.java58.book.service.BookService;
 public class BookController {
     private final BookService bookService;
 
-    @PostMapping("/book ")
+    @PostMapping("/book")
     public void addBook(@RequestBody BookDto book) {
         bookService.addBook(book);
     }
@@ -42,8 +42,8 @@ public class BookController {
     }
 
     @GetMapping("/authors/book/{isbn}")
-    public Iterable<AuthorDto> findAuthors(@PathVariable String isbn) {
-        return bookService.findAuthors(isbn);
+    public Iterable<AuthorDto> findBookAuthors(@PathVariable String isbn) {
+        return bookService.findBookAuthors(isbn);
     }
 
     @GetMapping("/publishers/author/{authorName}")

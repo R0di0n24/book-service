@@ -9,8 +9,7 @@ import telran.java58.book.dao.BookRepository;
 import telran.java58.book.dao.PublisherRepository;
 import telran.java58.book.dto.AuthorDto;
 import telran.java58.book.dto.BookDto;
-import telran.java58.book.dto.exception.EntityExistsException;
-import telran.java58.book.dto.exception.NotFoundException;
+import telran.java58.book.dto.exceptions.EntityExistsException;
 import telran.java58.book.model.Author;
 import telran.java58.book.model.Book;
 import telran.java58.book.model.Publisher;
@@ -29,24 +28,23 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public void addBook(BookDto bookDto) {
-        if (bookRepository.existsById(bookDto.getIsbn())) {
+        if(bookRepository.existsById(bookDto.getIsbn())){
             throw new EntityExistsException();
         }
         // Publisher
         Publisher publisher = publisherRepository.findById(bookDto.getPublisher())
                 .orElseGet(() -> publisherRepository.save(new Publisher(bookDto.getPublisher())));
+        // Authors
         Set<Author> authors = bookDto.getAuthors().stream()
                 .map(a -> authorRepository.findById(a.getAuthorName())
                         .orElseGet(() -> authorRepository.save(new Author(a.getAuthorName(), a.getBirthDate()))))
                 .collect(Collectors.toSet());
-
-        Book book = modelMapper.map(bookDto, Book.class);
+        Book book = new Book(bookDto.getIsbn(), bookDto.getTitle(), authors, publisher);
         bookRepository.save(book);
     }
 
     @Override
     public BookDto deleteBook(String isbn) {
-
         return null;
     }
 
@@ -57,9 +55,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto getBook(String isbn) {
-        Book book = bookRepository.findById(isbn).orElseThrow(NotFoundException::new);
-
-        return modelMapper.map(book, BookDto.class);
+        return null;
     }
 
     @Override
@@ -73,7 +69,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Iterable<AuthorDto> findAuthors(String isbn) {
+    public Iterable<AuthorDto> findBookAuthors(String isbn) {
         return null;
     }
 

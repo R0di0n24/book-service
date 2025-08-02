@@ -1,13 +1,13 @@
 package telran.java58.book.model;
 
-import java.util.Set;
-
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Setter
 @EqualsAndHashCode(of = "isbn")
 @Entity

@@ -21,5 +21,4 @@ public class Author {
     private String authorName;
     @Column(name = "birth_date")
     private LocalDate birthDate;
-
 }
