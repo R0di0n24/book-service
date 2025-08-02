@@ -15,10 +15,6 @@ import telran.java58.book.model.Author;
 import telran.java58.book.model.Book;
 import telran.java58.book.model.Publisher;
 
-import java.util.ArrayList;
-
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,7 +29,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public void addBook(BookDto bookDto) {
-        if(bookRepository.existsById(bookDto.getIsbn())){
+        if (bookRepository.existsById(bookDto.getIsbn())) {
             throw new EntityExistsException();
         }
         // Publisher
@@ -73,7 +69,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public Iterable<BookDto> findBooksByAuthor(String authorName) {
-        return bookRepository.findByAuthorsAuthorName(authorName)
+        return bookRepository.findBooksByAuthorsAuthorName(authorName)
                 .map(book -> modelMapper.map(book, BookDto.class))
                 .collect(Collectors.toList());
 
@@ -96,14 +92,20 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public Iterable<String> findPublishersByAuthor(String authorName) {
-        return bookRepository.findByAuthorsAuthorName(authorName)
+        return bookRepository.findBooksByAuthorsAuthorName(authorName)
                 .map(book -> book.getPublisher().getPublisherName())
                 .distinct()
                 .toList();
     }
-//TODO
+
+    //???
     @Override
+    @Transactional
     public AuthorDto removeAuthor(String authorName) {
-        return null;
+        Author author = authorRepository.findById(authorName).orElseThrow(NotFoundException::new);
+        bookRepository.findBooksByAuthorsAuthorName(authorName)
+                .filter(book -> book.getAuthors().size() > 1)
+                .forEach(book -> book.getAuthors().removeIf(a -> a.getAuthorName().equals(authorName)));
+        return modelMapper.map(author, AuthorDto.class);
     }
 }
