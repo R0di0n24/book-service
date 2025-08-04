@@ -104,8 +104,9 @@ public class BookServiceImpl implements BookService {
     public AuthorDto removeAuthor(String authorName) {
         Author author = authorRepository.findById(authorName).orElseThrow(NotFoundException::new);
         bookRepository.findBooksByAuthorsAuthorName(authorName)
-                .filter(book -> book.getAuthors().size() > 1)
+//                .filter(book -> book.getAuthors().size() > 1)
                 .forEach(book -> book.getAuthors().removeIf(a -> a.getAuthorName().equals(authorName)));
+        authorRepository.deleteById(authorName);
         return modelMapper.map(author, AuthorDto.class);
     }
 }
