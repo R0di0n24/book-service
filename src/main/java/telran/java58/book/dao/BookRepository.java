@@ -6,8 +6,8 @@ import java.util.stream.Stream;
 
 public interface BookRepository extends JpaRepository<Book, String> {
 
-    Stream<Book> findBooksByPublisherPublisherName(String publisherName);
-
-    Stream<Book> findBooksByAuthorsAuthorName(String authorName);
+//    Stream<Book> findBooksByPublisherPublisherName(String publisherName);
+//
+//    Stream<Book> findBooksByAuthorsAuthorName(String authorName);
 
 }
