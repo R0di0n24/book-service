@@ -14,13 +14,3 @@
 spring:
   application:
     name: book-service
-  datasource:
-    url: jdbc:mysql://localhost:3306/java58
-    username: ${DB_USER_NAME}
-    password: ${DB_USER_PASSWORD}
-  jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: true
-  liquibase:
-    change-log: classpath:/db/changelog/db.changelog-master.yaml

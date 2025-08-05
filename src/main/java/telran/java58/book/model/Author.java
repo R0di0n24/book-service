@@ -5,24 +5,23 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.concurrent.Flow;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = "authorName")
+@EqualsAndHashCode(of = "fullName")
 @Entity
-@Table(name = "authors")
+@Builder
 public class Author {
     @Id
-    @Column(name = "author_name")
-    private String authorName;
-    @Column(name = "birth_date")
-    private LocalDate birthDate;
-    @ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL)
+    private String fullName;
+    @Singular
+    @ManyToMany(mappedBy = "authors")
     private Set<Book> books;
-    public Author(String authorName, LocalDate birthDate) {
-        this.authorName = authorName;
-        this.birthDate = birthDate;
+
+    public Author(String fullName) {
+        this.fullName = fullName;
     }
 }
