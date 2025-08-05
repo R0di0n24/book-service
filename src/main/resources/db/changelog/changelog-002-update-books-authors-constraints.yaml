@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 01-drop-books-authors-authors-constraints-fk
+      author: rodion
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: books_authors
+            constraintName: fk_books_authors_authors
+  - changeSet:
+      id: 02-add-books-authors-authors-constraints-fk
+      author: rodion
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: author_name
+            baseTableName:  books_authors
+            constraintName: fk_books_authors_authors
+            referencedColumnNames: author_name
+            referencedTableName: authors
+            onDelete: CASCADE
+            onUpdate: CASCADE
+

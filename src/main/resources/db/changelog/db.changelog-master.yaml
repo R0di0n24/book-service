@@ -1,5 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/changelog-001-init-tables.yaml
-#  - include:
-#      file: db/changelog/next changelog
+  - include:
+      file: db/changelog/changelog-002-update-books-authors-constraints.yaml
