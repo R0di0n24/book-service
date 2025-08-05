@@ -19,9 +19,9 @@ public class ServiceConfiguration {
                 .setFieldAccessLevel(AccessLevel.PRIVATE)
                 .setMatchingStrategy(MatchingStrategies.STRICT);
 
-        mapper.createTypeMap(Book.class, BookDto.class)
-                .addMappings(m -> m.map(src -> src.getPublisher().getPublisherName(),
-                        BookDto::setPublisher));
+//        mapper.createTypeMap(Book.class, BookDto.class)
+//                .addMappings(m -> m.map(src -> src.getPublisher().getPublisherName(),
+//                        BookDto::setPublisher));
 
         return mapper;
     }

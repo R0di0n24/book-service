@@ -10,8 +10,14 @@ import lombok.*;
 @EqualsAndHashCode(of = "publisherName")
 @Entity
 @Table(name = "publishers")
+
 public class Publisher {
     @Id
     @Column(name = "publisher_name")
     private String publisherName;
+@Override
+public String toString() {
+    return publisherName;
+}
+
 }

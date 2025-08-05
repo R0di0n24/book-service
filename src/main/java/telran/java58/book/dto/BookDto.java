@@ -17,7 +17,6 @@ public class BookDto {
     private String isbn;
     private String title;
     private Set<AuthorDto> authors;
-    @Setter
     private String publisher;
 }
 

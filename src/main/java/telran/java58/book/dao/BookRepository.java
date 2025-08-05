@@ -5,9 +5,11 @@ import telran.java58.book.model.Book;
 import java.util.stream.Stream;
 
 public interface BookRepository extends JpaRepository<Book, String> {
+    Stream<Book> findByAuthorsAuthorNameIgnoreCase(String authorName);
 
-    Stream<Book> findBooksByPublisherPublisherName(String publisherName);
+    Stream<Book> findByPublisherPublisherNameIgnoreCase(String publisherName);
 
-    Stream<Book> findBooksByAuthorsAuthorName(String authorName);
+    void deleteByAuthorsAuthorNameIgnoreCase(String authorName);
+
 
 }

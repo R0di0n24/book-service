@@ -69,18 +69,18 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public Iterable<BookDto> findBooksByAuthor(String authorName) {
-        return bookRepository.findBooksByAuthorsAuthorName(authorName)
+        return bookRepository.findByAuthorsAuthorNameIgnoreCase(authorName)
                 .map(book -> modelMapper.map(book, BookDto.class))
-                .collect(Collectors.toList());
+                .toList();
 
     }
 
     @Override
     @Transactional(readOnly = true)
     public Iterable<BookDto> findBooksByPublisher(String publisherName) {
-        return bookRepository.findBooksByPublisherPublisherName(publisherName)
+        return bookRepository.findByPublisherPublisherNameIgnoreCase(publisherName)
                 .map(book -> modelMapper.map(book, BookDto.class))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -92,10 +92,11 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public Iterable<String> findPublishersByAuthor(String authorName) {
-        return bookRepository.findBooksByAuthorsAuthorName(authorName)
-                .map(book -> book.getPublisher().getPublisherName())
-                .distinct()
-                .toList();
+        return publisherRepository.findPublisherByAuthor(authorName);
+//        return bookRepository.findByAuthorsAuthorNameIgnoreCase(authorName)
+//                .map(book -> book.getPublisher().getPublisherName())
+//                .distinct()
+//                .toList();
     }
 
     //???
@@ -103,9 +104,10 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public AuthorDto removeAuthor(String authorName) {
         Author author = authorRepository.findById(authorName).orElseThrow(NotFoundException::new);
-        bookRepository.findBooksByAuthorsAuthorName(authorName)
-                .filter(book -> book.getAuthors().size() > 1)
-                .forEach(book -> book.getAuthors().removeIf(a -> a.getAuthorName().equals(authorName)));
+//        bookRepository.findByAuthorsAuthorNameIgnoreCase(authorName)
+////                .filter(book -> book.getAuthors().size() > 1)
+//                .forEach(book -> book.getAuthors().removeIf(a -> a.getAuthorName().equalsIgnoreCase(authorName)));
+        bookRepository.deleteByAuthorsAuthorNameIgnoreCase(authorName);
         return modelMapper.map(author, AuthorDto.class);
     }
 }
